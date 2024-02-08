@@ -1,9 +1,11 @@
 {
   "name": "cloudformation-force-delete",
-  "type": "module",
+  "description": "Clean up CloudFormation stacks easily",
   "bin": {
     "cloudformation-force-delete": "./bin/cloudformation-force-delete.js"
   },
+  "type": "module",
+  "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-cloudformation": "^3.509.0",
     "@aws-sdk/client-s3": "^3.509.0",
