@@ -61,7 +61,15 @@ export async function run() {
     await cloudFormation.send(new DeleteStackCommand({
         StackName: stackName,
     }));
-    await waitUntilStackDeleteComplete({client: cloudFormation, StackName: stackName});
+    // Catch errors
+    try {
+        await waitUntilStackDeleteComplete({client: cloudFormation, StackName: stackName});
+    } catch (e) {
+        spinner.fail('stack deletion failed');
+        console.error();
+        console.error(e);
+        process.exit(1);
+    }
 
     spinner.succeed('stack deleted');
 }
