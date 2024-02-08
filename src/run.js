@@ -79,9 +79,18 @@ export async function run() {
 }
 
 async function emptyBucket(bucket) {
-    const {Contents} = await s3.send(new ListObjectsV2Command({
-        Bucket: bucket,
-    }));
+    let Contents;
+    try {
+        Contents = (await s3.send(new ListObjectsV2Command({
+            Bucket: bucket,
+        }))).Contents;
+    } catch (e) {
+        if (e.name === 'NoSuchBucket') {
+            // The bucket does not exist, nothing to do
+            return;
+        }
+        throw e;
+    }
     const keys = (Contents ?? []).map((object) => object.Key);
     if (keys.length > 0) {
         await s3.send(new DeleteObjectsCommand({
