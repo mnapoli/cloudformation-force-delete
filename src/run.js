@@ -63,7 +63,11 @@ export async function run() {
     }));
     // Catch errors
     try {
-        await waitUntilStackDeleteComplete({client: cloudFormation, StackName: stackName});
+        await waitUntilStackDeleteComplete({
+            client: cloudFormation,
+        }, {
+            StackName: stackName,
+        });
     } catch (e) {
         spinner.fail('stack deletion failed');
         console.error();
@@ -78,10 +82,12 @@ async function emptyBucket(bucket) {
     const {Contents} = await s3.send(new ListObjectsV2Command({
         Bucket: bucket,
     }));
-    const keys = Contents.map((object) => object.Key);
-    await s3.send(new DeleteObjectsCommand({
-        Bucket: bucket, Delete: {
-            Objects: keys.map((Key) => ({Key})),
-        },
-    }));
+    const keys = (Contents ?? []).map((object) => object.Key);
+    if (keys.length > 0) {
+        await s3.send(new DeleteObjectsCommand({
+            Bucket: bucket, Delete: {
+                Objects: keys.map((Key) => ({Key})),
+            },
+        }));
+    }
 }
