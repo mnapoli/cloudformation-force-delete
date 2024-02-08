@@ -1,6 +1,6 @@
 # Clean up old CloudFormation stacks
 
-Is your AWS account littered with old CloudFormation stacks? Deleting them is a pain when they contain S3 buckets: you need to empty them manually.
+Is your AWS account littered with old CloudFormation stacks? Deleting them is a pain when they contain S3 buckets: you need to empty those manually.
 
 This tool automates the process:
 
