@@ -1,0 +1,14 @@
+{
+  "name": "cloudformation-force-delete",
+  "type": "module",
+  "bin": {
+    "cloudformation-force-delete": "./bin/cloudformation-force-delete.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cloudformation": "^3.509.0",
+    "@aws-sdk/client-s3": "^3.509.0",
+    "minimist": "^1.2.8",
+    "ora": "^8.0.1",
+    "press-any-key": "^0.1.1"
+  }
+}
